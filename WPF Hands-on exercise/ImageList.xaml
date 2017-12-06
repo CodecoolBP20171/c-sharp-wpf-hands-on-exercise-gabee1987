@@ -2,5 +2,33 @@
     x:Class="HandsOnLab1.ImageList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid />
+    <UserControl.Resources>
+        <DataTemplate x:Key="ImageItem" DataType="{x:Type ListBoxItem}">
+            <Image
+                MaxWidth="{Binding ElementName=ctrImageSize, Path=Value}"
+                Margin="10"
+                Source="{Binding}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <Slider
+            x:Name="ctrImageSize"
+            DockPanel.Dock="Top"
+            Maximum="200"
+            Minimum="50"
+            Value="150" />
+
+        <ListBox
+            ItemTemplate="{StaticResource ImageItem}"
+            ItemsSource="{Binding Path=Images}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+
+
+    </DockPanel>
 </UserControl>
