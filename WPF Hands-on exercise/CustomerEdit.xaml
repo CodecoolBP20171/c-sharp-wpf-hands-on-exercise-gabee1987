@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:entities="clr-namespace:HandsOnLab1.ClientEntities"
     xmlns:local="clr-namespace:HandsOnLab1"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -37,12 +38,14 @@
 
     <StackPanel>
         <ToolBar>
-            <Button Command="ApplicationCommands.Save">
-                <Image Source="{Binding Source={x:Static const:ImageConstants.SAVE_ICON}}" />
-            </Button>
-            <Button Command="ApplicationCommands.Undo">
-                <Image Source="{Binding Source={x:Static const:ImageConstants.UNDO_ICON}}" />
-            </Button>
+            <Button
+                Command="ApplicationCommands.Save"
+                Content="{materialDesign:PackIcon ContentSave}"
+                ToolTip="Save" />
+            <Button
+                Command="ApplicationCommands.Undo"
+                Content="{materialDesign:PackIcon Undo}"
+                ToolTip="Undo" />
         </ToolBar>
 
         <GroupBox Header="Customer Info">
@@ -68,6 +71,8 @@
                 <TextBox
                     Grid.Row="1"
                     Grid.Column="1"
+                    materialDesign:HintAssist.Hint="Floating Hint"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding Path=Customer.CompanyName}" />
                 <Label Grid.Row="2" Grid.Column="0">Phone</Label>
                 <TextBox
