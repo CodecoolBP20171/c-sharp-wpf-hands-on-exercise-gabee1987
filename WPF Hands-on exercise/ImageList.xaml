@@ -4,16 +4,77 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <UserControl.Resources>
-        <DataTemplate x:Key="ImageItem" DataType="{x:Type ListBoxItem}">
-            <materialDesign:Card
-                MaxWidth="{Binding ElementName=ctrImageSize, Path=Value}"
-                Margin="4,4,0,0"
-                Background="{DynamicResource PrimaryHueDarkBrush}"
-                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                UniformCornerRadius="6">
-                <Image Source="{Binding}" Stretch="Fill" />
-            </materialDesign:Card>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="ImageItem" DataType="{x:Type ListBoxItem}">
+                <!--<materialDesign:Card
+                    MaxWidth="{Binding ElementName=ctrImageSize, Path=Value}"
+                    Margin="4,4,0,0"
+                    Padding="5"
+                    Background="{DynamicResource PrimaryHueLightBrush}"
+                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                    <Image Source="{Binding}" Stretch="UniformToFill" />
+                </materialDesign:Card>-->
+                <materialDesign:Flipper
+                    MaxWidth="{Binding ElementName=ctrImageSize, Path=Value}"
+                    Margin="4,4,0,0"
+                    Padding="0"
+                    Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                    Style="{StaticResource MaterialDesignCardFlipper}">
+                    <materialDesign:Flipper.FrontContent>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Image
+                                Grid.Row="0"
+                                Source="{Binding}"
+                                Stretch="UniformToFill" />
+                            <Button
+                                Grid.Row="1"
+                                Margin="0,4,0,0"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                Style="{StaticResource MaterialDesignFlatButton}">
+                                Show Details
+                            </Button>
+                        </Grid>
+                    </materialDesign:Flipper.FrontContent>
+                    <materialDesign:Flipper.BackContent>
+                        <Grid Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" Height="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <materialDesign:ColorZone
+                                Margin="0"
+                                Padding="6"
+                                Mode="Accent">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        HorizontalAlignment="Left"
+                                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                        Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                        <materialDesign:PackIcon HorizontalAlignment="Right" Kind="ArrowLeft" />
+                                    </Button>
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center">Product Details</TextBlock>
+                                </StackPanel>
+                            </materialDesign:ColorZone>
+                            <StackPanel
+                                Grid.Row="2"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center">Current Details</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Flipper.BackContent>
+                </materialDesign:Flipper>
+            </DataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
         <Slider
